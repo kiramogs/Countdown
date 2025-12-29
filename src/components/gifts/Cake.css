@@ -2,13 +2,14 @@
 .cake-scene {
     position: relative;
     width: 100%;
-    min-height: 600px;
+    min-height: 700px;
     display: flex;
     align-items: center;
     justify-content: center;
     background: linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
     border-radius: 24px;
-    overflow: hidden;
+    overflow: visible;
+    padding: 40px 20px;
 }
 
 /* Background glow effect */
@@ -95,8 +96,8 @@
 #cake-candle-canvas {
     position: absolute;
     left: 50%;
-    top: 0;
-    transform: translateX(-50%) scale(0.6);
+    top: -15%;
+    transform: translateX(-50%) scale(0.55);
     width: 100px;
     height: 140px;
     z-index: 10;
@@ -112,7 +113,7 @@
 .candle-glow {
     position: absolute;
     left: 50%;
-    top: 0;
+    top: -15%;
     transform: translateX(-50%);
     width: 120px;
     height: 120px;
