@@ -1,9 +1,9 @@
-/* Envelope Animation - Based on CSS Envelope Repo */
+/* Envelope Animation - With Wax Seal */
 :root {
     --envelope-bg: #f5edd1;
     --envelope-tab: #ecdeb8;
     --envelope-cover: #e6cfa7;
-    --heart-color: #ff1744;
+    --wax-color: #8b0000;
     --shadow: rgba(0, 0, 0, 0.2);
 }
 
@@ -37,7 +37,7 @@
     height: 230px;
 }
 
-/* Top flap (triangle) - using border trick */
+/* Top flap (triangle) */
 .envelope::before {
     content: "";
     position: absolute;
@@ -106,57 +106,72 @@
     white-space: pre-wrap;
 }
 
-/* HEART SEAL */
+/* WAX SEAL - Realistic Design */
 .heart {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 20px;
-    height: 20px;
-    background: var(--heart-color);
+    width: 55px;
+    height: 55px;
+    background: radial-gradient(circle at 35% 35%, #c41e3a, var(--wax-color));
+    border-radius: 50%;
     z-index: 4;
-    transform: translate(-50%, -20%) rotate(45deg);
+    transform: translate(-50%, -20%);
     transition: transform 0.5s ease-in-out 1s;
-    box-shadow: 0 1px 6px var(--shadow);
+    box-shadow:
+        0 3px 8px var(--shadow),
+        inset 0 -3px 5px rgba(0, 0, 0, 0.3),
+        inset 0 2px 3px rgba(255, 255, 255, 0.1);
     cursor: pointer;
+    border: 3px solid #a00;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.heart::before,
-.heart::after {
+/* Wax texture simulation */
+.heart::before {
     content: "";
     position: absolute;
-    width: 20px;
-    height: 20px;
-    background-color: var(--heart-color);
+    width: 100%;
+    height: 100%;
     border-radius: 50%;
+    background-image:
+        radial-gradient(circle at 30% 30%, transparent 15%, rgba(0, 0, 0, 0.1) 15%, rgba(0, 0, 0, 0.1) 17%, transparent 17%),
+        radial-gradient(circle at 70% 60%, transparent 12%, rgba(0, 0, 0, 0.08) 12%, rgba(0, 0, 0, 0.08) 14%, transparent 14%),
+        radial-gradient(circle at 50% 80%, transparent 10%, rgba(0, 0, 0, 0.06) 10%, rgba(0, 0, 0, 0.06) 12%, transparent 12%);
+    opacity: 0.7;
 }
 
-.heart::before {
-    top: -10px;
-    left: 0;
-}
-
+/* Heart stamp on wax */
 .heart::after {
-    top: 0;
-    left: 10px;
+    content: "❤️";
+    position: absolute;
+    font-size: 24px;
+    filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.5));
+    transform: rotate(-10deg);
+    z-index: 1;
 }
 
-/* OPENED STATE */
+/* OPENED STATE - Improved animations */
 .flap>.envelope::before {
     transform: rotateX(180deg);
     z-index: 0;
+    transition: all 0.6s ease-in-out 0.3s;
 }
 
 .flap>.envelope>.letter {
-    bottom: 100px;
-    transform: scale(1.5);
-    transition-delay: 1s;
+    bottom: 120px;
+    transform: scale(1.6);
+    transition: all 1.2s ease-in-out 1s;
     z-index: 10;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
 }
 
 .flap>.heart {
-    transform: translate(-50%, -20%) rotate(90deg);
-    transition-delay: 0.4s;
+    transform: translate(-50%, -20%) rotate(90deg) scale(0.8);
+    transition: all 0.5s ease-in-out 0.4s;
+    opacity: 0.7;
 }
 
 /* Close Button */
@@ -199,11 +214,25 @@
         border-left: 130px solid var(--envelope-cover);
     }
 
+    .heart {
+        width: 45px;
+        height: 45px;
+    }
+
+    .heart::after {
+        font-size: 20px;
+    }
+
     .letter-text {
         font-size: 0.75rem;
     }
 
     .letter-text strong {
         font-size: 1.1rem;
+    }
+
+    .flap>.envelope>.letter {
+        bottom: 100px;
+        transform: scale(1.4);
     }
 }
