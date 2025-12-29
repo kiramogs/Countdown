@@ -3,77 +3,42 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-    /* Align to top to allow expansion downwards */
+    align-items: center;
     gap: 2rem;
     padding: 2rem;
     min-height: 60vh;
     position: relative;
+    flex-wrap: wrap;
 }
 
 .gift-wrapper {
     position: relative;
-    width: 300px;
-    /* Base size */
-    height: 400px;
-    /* Base size */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1;
+    cursor: pointer;
+    transition: transform 0.3s ease;
 }
 
-/* Expanded State - Takes over the view */
-.gift-wrapper.expanded {
-    position: absolute;
-    /* Take out of flow */
-    top: 0;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-    width: 100%;
-    max-width: 1000px;
-    height: auto;
-    min-height: 80vh;
-    z-index: 100;
-    cursor: auto;
-    /* Allow interactions inside */
+.gift-wrapper:hover {
+    transform: translateY(-10px);
 }
 
-/* Container for the full component (Cake/Envelope/Portal) */
-.full-gift-container {
+/* Expanded Gift Container */
+.expanded-gift-container {
     width: 100%;
-    height: 100%;
+    min-height: 70vh;
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-/* Hide labels/hints when expanded */
-.expanded .mystery-text {
-    display: none;
 }
 
 @media (max-width: 768px) {
     .gifts-section-transform {
         flex-direction: column;
-        align-items: center;
-    }
-
-    .gift-wrapper {
-        width: 100%;
-        max-width: 320px;
-        height: 350px;
-    }
-
-    .gift-wrapper.expanded {
-        position: fixed;
-        /* Fixed on mobile to cover scroll issues */
-        top: 0;
-        left: 0;
-        height: 100vh;
+        gap: 1.5rem;
         padding: 1rem;
-        background: rgba(0, 0, 0, 0.8);
-        /* Dim background */
+    }
+
+    .expanded-gift-container {
+        min-height: 60vh;
+        padding: 1rem;
     }
 }

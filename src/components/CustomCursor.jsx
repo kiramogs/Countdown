@@ -1,64 +1,96 @@
-import { useRef, useEffect, useState } from 'react';
-import { motion, useMotionValue, useSpring } from 'framer-motion';
-import "../index.css"; // Ensure corrected path import
+import { useEffect, useRef } from 'react';
+import { motion, useMotionValue } from 'framer-motion';
+import "../index.css";
 
 const CustomCursor = () => {
     const cursorX = useMotionValue(-100);
     const cursorY = useMotionValue(-100);
-    const [trails, setTrails] = useState([]);
-
-    // Smooth heart movement
-    const springConfig = { damping: 25, stiffness: 300 };
-    const smoothX = useSpring(cursorX, springConfig);
-    const smoothY = useSpring(cursorY, springConfig);
+    const trailCanvasRef = useRef(null);
+    const trailPoints = useRef([]);
 
     useEffect(() => {
+        const canvas = trailCanvasRef.current;
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let animationId;
+
+        const handleResize = () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        };
+
         const moveCursor = (e) => {
             cursorX.set(e.clientX);
             cursorY.set(e.clientY);
 
             // Add trail point
-            const newTrail = {
+            trailPoints.current.push({
                 x: e.clientX,
                 y: e.clientY,
-                id: Date.now()
-            };
+                age: 0
+            });
 
-            setTrails(prev => [...prev.slice(-15), newTrail]);
+            // Keep only last 20 points
+            if (trailPoints.current.length > 20) {
+                trailPoints.current.shift();
+            }
+        };
+
+        const drawTrails = () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            trailPoints.current.forEach((point, i) => {
+                point.age += 0.02;
+                const alpha = Math.max(0, 1 - point.age);
+                const size = Math.max(0, 8 * (1 - point.age));
+
+                if (alpha > 0 && size > 0) {
+                    ctx.beginPath();
+                    ctx.arc(point.x, point.y, size, 0, Math.PI * 2);
+                    ctx.fillStyle = `hsla(${330 + i * 3}, 100%, 70%, ${alpha * 0.6})`;
+                    ctx.fill();
+                }
+            });
+
+            // Remove dead points
+            trailPoints.current = trailPoints.current.filter(p => p.age < 1);
+
+            animationId = requestAnimationFrame(drawTrails);
         };
 
         window.addEventListener('mousemove', moveCursor);
-        return () => window.removeEventListener('mousemove', moveCursor);
-    }, [cursorX, cursorY]);
+        window.addEventListener('resize', handleResize);
+        animationId = requestAnimationFrame(drawTrails);
 
-    // Remove old trails
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setTrails(prev => prev.filter(t => Date.now() - t.id < 500));
-        }, 100);
-        return () => clearInterval(interval);
-    }, []);
+        return () => {
+            window.removeEventListener('mousemove', moveCursor);
+            window.removeEventListener('resize', handleResize);
+            cancelAnimationFrame(animationId);
+        };
+    }, [cursorX, cursorY]);
 
     return (
         <>
-            {trails.map((trail, index) => (
-                <motion.div
-                    key={trail.id}
-                    className="cursor-trail"
-                    initial={{ opacity: 0.8, scale: 1 }}
-                    animate={{ opacity: 0, scale: 0 }}
-                    transition={{ duration: 0.5 }}
-                    style={{
-                        left: trail.x,
-                        top: trail.y,
-                        background: `hsla(${330 + index * 2}, 100%, 70%, 0.8)` // Shimmery pink hues
-                    }}
-                />
-            ))}
+            <canvas
+                ref={trailCanvasRef}
+                style={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    pointerEvents: 'none',
+                    zIndex: 9998
+                }}
+            />
             <motion.div
                 className="custom-cursor"
                 style={{
-                    x: cursorX, // Use raw values for instant tracking if spring feels laggy, or keep smooth
+                    x: cursorX,
                     y: cursorY,
                     translateX: "-50%",
                     translateY: "-50%"

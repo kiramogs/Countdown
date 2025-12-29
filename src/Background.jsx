@@ -6,11 +6,14 @@ const Background = () => {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', { alpha: false });
 
     let animationFrameId;
     let width, height;
     let particles = [];
+    let lastTime = 0;
+    const FPS = 30; // Limit FPS for smoother performance
+    const frameInterval = 1000 / FPS;
 
     const resize = () => {
       width = window.innerWidth;
@@ -22,16 +25,16 @@ const Background = () => {
 
     const initParticles = () => {
       particles = [];
-      const count = Math.min(width * 0.05, 50); // Limit count for performance
+      const count = Math.min(Math.floor(width * 0.02), 25); // Reduced count
       for (let i = 0; i < count; i++) {
         particles.push({
           x: Math.random() * width,
           y: Math.random() * height,
-          size: Math.random() * 20 + 10, // Large hearts
-          speedY: Math.random() * 1 + 0.5,
-          opacity: Math.random() * 0.5 + 0.1,
+          size: Math.random() * 15 + 12,
+          speedY: Math.random() * 0.5 + 0.3,
+          opacity: Math.random() * 0.3 + 0.1,
           rotation: Math.random() * 360,
-          rotationSpeed: (Math.random() - 0.5) * 2
+          rotationSpeed: (Math.random() - 0.5) * 0.5
         });
       }
     };
@@ -43,12 +46,26 @@ const Background = () => {
       ctx.rotate(rotation * Math.PI / 180);
       ctx.font = `${size}px serif`;
       ctx.fillStyle = "#ffc0cb";
-      ctx.fillText("❤", 0, 0);
+      ctx.fillText("❤", -size / 4, size / 4);
       ctx.restore();
     };
 
-    const animate = () => {
-      ctx.clearRect(0, 0, width, height);
+    const animate = (currentTime) => {
+      animationFrameId = requestAnimationFrame(animate);
+
+      const deltaTime = currentTime - lastTime;
+      if (deltaTime < frameInterval) return;
+      lastTime = currentTime - (deltaTime % frameInterval);
+
+      // Draw gradient background
+      const gradient = ctx.createLinearGradient(0, 0, width, height);
+      gradient.addColorStop(0, '#ff9a9e');
+      gradient.addColorStop(0.25, '#fad0c4');
+      gradient.addColorStop(0.5, '#fbc2eb');
+      gradient.addColorStop(0.75, '#a18cd1');
+      gradient.addColorStop(1, '#ff9a9e');
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, width, height);
 
       particles.forEach(p => {
         p.y -= p.speedY;
@@ -59,17 +76,23 @@ const Background = () => {
         }
         drawHeart(p.x, p.y, p.size, p.opacity, p.rotation);
       });
-
-      animationFrameId = requestAnimationFrame(animate);
     };
 
-    window.addEventListener('resize', resize);
+    // Debounced resize
+    let resizeTimeout;
+    const handleResize = () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(resize, 100);
+    };
+
+    window.addEventListener('resize', handleResize);
     resize();
-    animate();
+    animationFrameId = requestAnimationFrame(animate);
 
     return () => {
-      window.removeEventListener('resize', resize);
+      window.removeEventListener('resize', handleResize);
       cancelAnimationFrame(animationFrameId);
+      clearTimeout(resizeTimeout);
     };
   }, []);
 
@@ -83,10 +106,7 @@ const Background = () => {
         width: '100%',
         height: '100%',
         zIndex: -1,
-        pointerEvents: 'none',
-        background: 'linear-gradient(-45deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1)',
-        backgroundSize: '400% 400%',
-        animation: 'gradientBG 15s ease infinite'
+        pointerEvents: 'none'
       }}
     />
   );

@@ -5,14 +5,11 @@ import Cake from './gifts/Cake';
 import Portal from './gifts/Portal';
 import GiftBox from './GiftBox';
 import './BirthdaySurprise.css';
-import './BirthdaySurpriseTransform.css'; // Add new styles
+import './BirthdaySurpriseTransform.css';
 
 const BirthdaySurprise = () => {
-    const [activeGift, setActiveGift] = useState(null); // 'envelope', 'cake', 'portal' or null
+    const [activeGift, setActiveGift] = useState(null);
 
-    // ========================================
-    // CUSTOMIZE THIS MESSAGE FOR HER! 💕
-    // ========================================
     const letterMessage = `My Dearest,
 
 On this special day, I want you to know how incredibly grateful I am to have you in my life.
@@ -27,119 +24,77 @@ May this year bring you all the joy and love you deserve.`;
 
     const handleClose = () => setActiveGift(null);
 
+    const gifts = [
+        { id: 'envelope', shape: 'envelope', colors: ['#ff9a9e', '#fecfef'], label: 'Love Letter' },
+        { id: 'cake', shape: 'cake', colors: ['#a18cd1', '#fbc2eb'], label: 'Birthday Cake' },
+        { id: 'portal', shape: 'gift', colors: ['#667eea', '#764ba2'], label: 'Special Website' }
+    ];
+
+    const renderGiftContent = (giftId) => {
+        switch (giftId) {
+            case 'envelope':
+                return <Envelope message={letterMessage} onClose={handleClose} />;
+            case 'cake':
+                return <Cake onClose={handleClose} />;
+            case 'portal':
+                return <Portal onClose={handleClose} />;
+            default:
+                return null;
+        }
+    };
+
     return (
         <motion.div
             className="birthday-surprise"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 1.5 }}
+            transition={{ duration: 1 }}
         >
             <div className="content-wrapper">
                 <motion.section
                     className="hero-section"
-                    animate={{
-                        height: activeGift ? '20vh' : '40vh',
-                        opacity: activeGift ? 0.5 : 1
-                    }}
+                    animate={{ opacity: activeGift ? 0.3 : 1, scale: activeGift ? 0.95 : 1 }}
+                    transition={{ duration: 0.3 }}
                 >
                     <h1 className="main-title">Happy Birthday</h1>
-                    <AnimatePresence>
-                        {!activeGift && (
-                            <motion.p
-                                className="subtitle-text"
-                                initial={{ opacity: 0, height: 0 }}
-                                animate={{ opacity: 1, height: 'auto' }}
-                                exit={{ opacity: 0, height: 0 }}
-                            >
-                                Tap a gift to reveal your surprise...
-                            </motion.p>
-                        )}
-                    </AnimatePresence>
+                    {!activeGift && <p className="subtitle-text">Tap a gift to reveal your surprise...</p>}
                 </motion.section>
 
                 <section className="gifts-section-transform">
-                    <AnimatePresence mode="popLayout">
-                        {/* 1. ENVELOPE */}
-                        {(!activeGift || activeGift === 'envelope') && (
+                    {/* Gift Boxes */}
+                    <AnimatePresence>
+                        {!activeGift && gifts.map((gift, index) => (
                             <motion.div
-                                layoutId="gift-envelope"
-                                className={`gift-wrapper ${activeGift === 'envelope' ? 'expanded' : ''}`}
-                                onClick={() => !activeGift && setActiveGift('envelope')}
+                                key={gift.id}
+                                className="gift-wrapper"
+                                initial={{ opacity: 0, y: 50 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, scale: 0.8 }}
+                                transition={{ duration: 0.4, delay: index * 0.1 }}
+                                onClick={() => setActiveGift(gift.id)}
                             >
-                                {!activeGift ? (
-                                    <GiftBox
-                                        index={0}
-                                        shape="envelope"
-                                        gradientColors={['#ff9a9e', '#fecfef']}
-                                        label="Love Letter"
-                                    />
-                                ) : (
-                                    <motion.div
-                                        className="full-gift-container"
-                                        initial={{ opacity: 0 }}
-                                        animate={{ opacity: 1 }}
-                                        transition={{ delay: 0.3 }}
-                                    >
-                                        <Envelope
-                                            message={letterMessage}
-                                            onClose={handleClose}
-                                        />
-                                    </motion.div>
-                                )}
+                                <GiftBox
+                                    index={index}
+                                    shape={gift.shape}
+                                    gradientColors={gift.colors}
+                                    label={gift.label}
+                                />
                             </motion.div>
-                        )}
+                        ))}
+                    </AnimatePresence>
 
-                        {/* 2. CAKE */}
-                        {(!activeGift || activeGift === 'cake') && (
+                    {/* Active Gift Content */}
+                    <AnimatePresence mode="wait">
+                        {activeGift && (
                             <motion.div
-                                layoutId="gift-cake"
-                                className={`gift-wrapper ${activeGift === 'cake' ? 'expanded' : ''}`}
-                                onClick={() => !activeGift && setActiveGift('cake')}
+                                key={activeGift}
+                                className="expanded-gift-container"
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.9 }}
+                                transition={{ duration: 0.4 }}
                             >
-                                {!activeGift ? (
-                                    <GiftBox
-                                        index={1}
-                                        shape="cake"
-                                        gradientColors={['#a18cd1', '#fbc2eb']}
-                                        label="Birthday Cake"
-                                    />
-                                ) : (
-                                    <motion.div
-                                        className="full-gift-container"
-                                        initial={{ opacity: 0 }}
-                                        animate={{ opacity: 1 }}
-                                        transition={{ delay: 0.3 }}
-                                    >
-                                        <Cake onClose={handleClose} />
-                                    </motion.div>
-                                )}
-                            </motion.div>
-                        )}
-
-                        {/* 3. PORTAL */}
-                        {(!activeGift || activeGift === 'portal') && (
-                            <motion.div
-                                layoutId="gift-portal"
-                                className={`gift-wrapper ${activeGift === 'portal' ? 'expanded' : ''}`}
-                                onClick={() => !activeGift && setActiveGift('portal')}
-                            >
-                                {!activeGift ? (
-                                    <GiftBox
-                                        index={2}
-                                        shape="gift"
-                                        gradientColors={['#667eea', '#764ba2']}
-                                        label="Special Website"
-                                    />
-                                ) : (
-                                    <motion.div
-                                        className="full-gift-container"
-                                        initial={{ opacity: 0 }}
-                                        animate={{ opacity: 1 }}
-                                        transition={{ delay: 0.3 }}
-                                    >
-                                        <Portal onClose={handleClose} />
-                                    </motion.div>
-                                )}
+                                {renderGiftContent(activeGift)}
                             </motion.div>
                         )}
                     </AnimatePresence>
