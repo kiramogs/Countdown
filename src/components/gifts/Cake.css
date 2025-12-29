@@ -337,8 +337,9 @@
 /* Responsive */
 @media (max-width: 768px) {
     .cake-scene {
-        min-height: 500px;
+        min-height: 550px;
         border-radius: 16px;
+        padding: 30px 15px;
     }
 
     .cake-img-wrapper {
@@ -348,7 +349,14 @@
     #cake-candle-canvas {
         width: 80px;
         height: 110px;
-        top: 8%;
+        top: -24%;
+        transform: translateX(-50%) scale(0.5);
+    }
+
+    .candle-glow {
+        top: -24%;
+        width: 100px;
+        height: 100px;
     }
 
     .blow-btn {
@@ -375,8 +383,24 @@
 }
 
 @media (max-width: 480px) {
+    .cake-scene {
+        min-height: 500px;
+        padding: 25px 10px;
+    }
+
     .cake-img-wrapper {
-        max-width: 250px;
+        max-width: 220px;
+    }
+
+    #cake-candle-canvas {
+        top: -26%;
+        transform: translateX(-50%) scale(0.45);
+    }
+
+    .candle-glow {
+        top: -26%;
+        width: 80px;
+        height: 80px;
     }
 
     .birthday-message {
