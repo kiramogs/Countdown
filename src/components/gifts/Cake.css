@@ -95,8 +95,8 @@
 #cake-candle-canvas {
     position: absolute;
     left: 50%;
-    top: 5%;
-    transform: translateX(-50%);
+    top: 20%;
+    transform: translateX(-50%) scale(0.75);
     width: 100px;
     height: 140px;
     z-index: 10;
@@ -112,7 +112,7 @@
 .candle-glow {
     position: absolute;
     left: 50%;
-    top: 10%;
+    top: 18%;
     transform: translateX(-50%);
     width: 120px;
     height: 120px;
