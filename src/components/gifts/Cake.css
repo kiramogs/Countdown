@@ -347,16 +347,16 @@
     }
 
     #cake-candle-canvas {
-        width: 80px;
-        height: 110px;
-        top: -24%;
-        transform: translateX(-50%) scale(0.5);
+        width: 70px !important;
+        height: 100px !important;
+        top: -30% !important;
+        transform: translateX(-50%) scale(0.5) !important;
     }
 
     .candle-glow {
-        top: -24%;
-        width: 100px;
-        height: 100px;
+        top: -30% !important;
+        width: 90px;
+        height: 90px;
     }
 
     .blow-btn {
@@ -384,31 +384,37 @@
 
 @media (max-width: 480px) {
     .cake-scene {
-        min-height: 500px;
-        padding: 25px 10px;
+        min-height: 480px;
+        padding: 20px 10px;
     }
 
     .cake-img-wrapper {
-        max-width: 220px;
+        max-width: 200px;
     }
 
     #cake-candle-canvas {
-        top: -26%;
-        transform: translateX(-50%) scale(0.45);
+        width: 60px !important;
+        height: 90px !important;
+        top: -35% !important;
+        transform: translateX(-50%) scale(0.4) !important;
     }
 
     .candle-glow {
-        top: -26%;
-        width: 80px;
-        height: 80px;
+        top: -35% !important;
+        width: 70px;
+        height: 70px;
     }
 
     .birthday-message {
-        font-size: 1.5rem;
+        font-size: 1.3rem;
     }
 
     .blow-btn {
-        padding: 12px 28px;
-        font-size: 1rem;
+        padding: 10px 24px;
+        font-size: 0.95rem;
+    }
+
+    .hint-text {
+        font-size: 0.85rem;
     }
 }
