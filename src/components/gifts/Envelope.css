@@ -1,0 +1,209 @@
+/* Envelope Animation - Based on CSS Envelope Repo */
+:root {
+    --envelope-bg: #f5edd1;
+    --envelope-tab: #ecdeb8;
+    --envelope-cover: #e6cfa7;
+    --heart-color: #ff1744;
+    --shadow: rgba(0, 0, 0, 0.2);
+}
+
+.envelope-scene {
+    position: relative;
+    width: 100%;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.envelope-wrapper {
+    position: relative;
+    background: var(--envelope-bg);
+    box-shadow: 0 0 40px var(--shadow);
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.envelope-wrapper:hover:not(.flap) {
+    transform: scale(1.05);
+}
+
+/* THE ENVELOPE */
+.envelope {
+    position: relative;
+    width: 300px;
+    height: 230px;
+}
+
+/* Top flap (triangle) - using border trick */
+.envelope::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    width: 0;
+    height: 0;
+    border-top: 130px solid var(--envelope-tab);
+    border-right: 150px solid transparent;
+    border-left: 150px solid transparent;
+    transform-origin: top;
+    transition: all 0.5s ease-in-out 0.7s;
+}
+
+/* Body of envelope */
+.envelope::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    width: 0;
+    height: 0;
+    border-top: 130px solid transparent;
+    border-right: 150px solid var(--envelope-cover);
+    border-bottom: 100px solid var(--envelope-cover);
+    border-left: 150px solid var(--envelope-cover);
+}
+
+/* THE LETTER INSIDE */
+.letter {
+    position: absolute;
+    right: 20%;
+    bottom: 0;
+    width: 54%;
+    height: 80%;
+    background: white;
+    text-align: center;
+    transition: all 1s ease-in-out;
+    box-shadow: 0 0 5px var(--shadow);
+    padding: 20px 10px;
+    overflow-y: auto;
+    z-index: 1;
+}
+
+.letter-text {
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+    text-align: left;
+    font-size: 0.85rem;
+    line-height: 1.6;
+}
+
+.letter-text strong {
+    display: block;
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.3rem;
+    color: #ff4081;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.letter-text p {
+    margin: 0;
+    white-space: pre-wrap;
+}
+
+/* HEART SEAL */
+.heart {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    background: var(--heart-color);
+    z-index: 4;
+    transform: translate(-50%, -20%) rotate(45deg);
+    transition: transform 0.5s ease-in-out 1s;
+    box-shadow: 0 1px 6px var(--shadow);
+    cursor: pointer;
+}
+
+.heart::before,
+.heart::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: var(--heart-color);
+    border-radius: 50%;
+}
+
+.heart::before {
+    top: -10px;
+    left: 0;
+}
+
+.heart::after {
+    top: 0;
+    left: 10px;
+}
+
+/* OPENED STATE */
+.flap>.envelope::before {
+    transform: rotateX(180deg);
+    z-index: 0;
+}
+
+.flap>.envelope>.letter {
+    bottom: 100px;
+    transform: scale(1.5);
+    transition-delay: 1s;
+    z-index: 10;
+}
+
+.flap>.heart {
+    transform: translate(-50%, -20%) rotate(90deg);
+    transition-delay: 0.4s;
+}
+
+/* Close Button */
+.close-envelope-btn {
+    padding: 12px 30px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(118, 75, 162, 0.4);
+    transition: all 0.3s;
+    z-index: 100;
+}
+
+.close-envelope-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(118, 75, 162, 0.6);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .envelope {
+        width: 260px;
+        height: 200px;
+    }
+
+    .envelope::before {
+        border-top: 110px solid var(--envelope-tab);
+        border-right: 130px solid transparent;
+        border-left: 130px solid transparent;
+    }
+
+    .envelope::after {
+        border-top: 110px solid transparent;
+        border-right: 130px solid var(--envelope-cover);
+        border-bottom: 90px solid var(--envelope-cover);
+        border-left: 130px solid var(--envelope-cover);
+    }
+
+    .letter-text {
+        font-size: 0.75rem;
+    }
+
+    .letter-text strong {
+        font-size: 1.1rem;
+    }
+}

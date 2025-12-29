@@ -1,0 +1,113 @@
+/* Glass Card Container */
+.glass-card-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+  padding: 4rem 5rem;
+  text-align: center;
+  max-width: 90%;
+  width: 750px;
+  color: #fff;
+  transition: transform 0.3s ease;
+}
+
+.title {
+  font-family: 'Dancing Script', cursive;
+  font-size: 5rem;
+  margin-bottom: 3rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  color: #fff;
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-family: 'Poppins', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+}
+
+/* Timer Grid */
+.timer-container {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.timer-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.3);
+  padding: 1.5rem 2rem;
+  border-radius: 16px;
+  min-width: 120px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.timer-box:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.timer-number {
+  font-family: 'Poppins', sans-serif;
+  font-size: 3.5rem;
+  font-weight: 700;
+  line-height: 1;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  color: white;
+  /* Ensure text is white */
+  font-variant-numeric: tabular-nums;
+}
+
+.timer-label {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  margin-top: 0.5rem;
+  letter-spacing: 1px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .glass-card {
+    padding: 2rem;
+    width: 95%;
+  }
+
+  .title {
+    font-size: 3.5rem;
+  }
+
+  .timer-container {
+    gap: 1rem;
+  }
+
+  .timer-box {
+    min-width: 80px;
+    padding: 1rem;
+  }
+
+  .timer-number {
+    font-size: 2.2rem;
+  }
+}

@@ -1,0 +1,81 @@
+/* Global Styles - Romantic Theme */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;500;600&display=swap');
+
+:root {
+  --primary-color: #ff9a9e;
+  --secondary-color: #fecfef;
+  --accent-color: #a18cd1;
+  --text-dark: #4a4a4a;
+  --text-light: #fff;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  color: var(--text-dark);
+  overflow-x: hidden;
+  cursor: none;
+  /* Hide default cursor */
+
+  /* Animated Romantic Background */
+  background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fad0c4, #fbc2eb, #a18cd1);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+}
+
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Typography Overrides */
+h1,
+h2,
+h3 {
+  font-family: 'Dancing Script', cursive;
+}
+
+/* Ensure all interactive elements hide cursor but we rely on custom cursor */
+a,
+button,
+.gift-box,
+.glass-card {
+  cursor: none !important;
+}
+
+/* Modals should probably not hide cursor entirely if it causes issues, but let's stick to the plan */
+.modal-overlay {
+  cursor: auto;
+}
+
+/* Custom Cursor - Pink Heart */
+.custom-cursor {
+  position: fixed;
+  font-size: 24px;
+  pointer-events: none;
+  z-index: 10000;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.cursor-trail {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background: radial-gradient(circle, #ff69b4, transparent);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: screen;
+}

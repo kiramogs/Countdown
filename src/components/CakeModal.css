@@ -1,0 +1,213 @@
+.cake-overlay {
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.cake-container {
+    background: linear-gradient(135deg, #fff5f5 0%, #ffe4ec 100%);
+    border-radius: 24px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(255, 154, 158, 0.4);
+    max-width: 400px;
+    width: 90%;
+    position: relative;
+    overflow: hidden;
+}
+
+.cake-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2rem;
+    color: #a18cd1;
+    margin-bottom: 1.5rem;
+}
+
+/* Cake Structure */
+.cake {
+    position: relative;
+    margin: 2rem auto;
+    width: 200px;
+}
+
+.candles {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: -5px;
+    position: relative;
+    z-index: 5;
+}
+
+.candle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.candle-body {
+    width: 8px;
+    height: 30px;
+    background: linear-gradient(to right, #fff5a0, #ffeb3b);
+    border-radius: 2px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.flame {
+    width: 12px;
+    height: 20px;
+    background: linear-gradient(to top, #ff9800, #ffeb3b, #fff);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    margin-bottom: 2px;
+    box-shadow: 0 0 10px #ff9800, 0 0 20px #ff6f00;
+}
+
+.cake-top {
+    width: 160px;
+    height: 40px;
+    background: linear-gradient(135deg, #ff9a9e 0%, #fbc2eb 100%);
+    border-radius: 10px 10px 0 0;
+    margin: 0 auto;
+    position: relative;
+    box-shadow: inset 0 -5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.cake-top::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    right: 10px;
+    height: 8px;
+    background: #fff;
+    border-radius: 50%;
+    opacity: 0.5;
+}
+
+.cake-middle {
+    width: 180px;
+    height: 50px;
+    background: linear-gradient(135deg, #fbc2eb 0%, #a18cd1 100%);
+    margin: 0 auto;
+    position: relative;
+    box-shadow: inset 0 -5px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Frosting drips */
+.cake-middle::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 10%;
+    width: 15px;
+    height: 25px;
+    background: #ff9a9e;
+    border-radius: 0 0 50% 50%;
+}
+
+.cake-middle::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 20%;
+    width: 12px;
+    height: 20px;
+    background: #ff9a9e;
+    border-radius: 0 0 50% 50%;
+}
+
+.cake-bottom {
+    width: 200px;
+    height: 60px;
+    background: linear-gradient(135deg, #a18cd1 0%, #8b5cf6 100%);
+    border-radius: 0 0 15px 15px;
+    margin: 0 auto;
+    box-shadow: inset 0 -8px 15px rgba(0, 0, 0, 0.15);
+}
+
+.cake-plate {
+    width: 220px;
+    height: 15px;
+    background: linear-gradient(to bottom, #e0e0e0, #bdbdbd);
+    border-radius: 50%;
+    margin: 5px auto 0;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Buttons */
+.blow-button {
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #ff9a9e 0%, #fbc2eb 100%);
+    border: none;
+    border-radius: 50px;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 154, 158, 0.4);
+    margin-bottom: 1rem;
+}
+
+.blow-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 154, 158, 0.5);
+}
+
+.cake-close {
+    background: linear-gradient(135deg, #a18cd1 0%, #8b5cf6 100%);
+    margin-top: 1rem;
+}
+
+/* Wish Message */
+.wish-message {
+    margin: 1rem 0;
+}
+
+.wish-message p {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.8rem;
+    color: #a18cd1;
+    margin: 0;
+}
+
+.wish-sub {
+    font-family: 'Poppins', sans-serif !important;
+    font-size: 1rem !important;
+    color: #888 !important;
+    margin-top: 0.5rem !important;
+}
+
+/* Confetti */
+.confetti-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1001;
+    overflow: hidden;
+}
+
+.confetti-piece {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .cake-container {
+        padding: 1.5rem;
+    }
+
+    .cake-title {
+        font-size: 1.6rem;
+    }
+
+    .cake {
+        transform: scale(0.85);
+        margin: 1rem auto;
+    }
+}
