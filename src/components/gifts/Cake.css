@@ -1,34 +1,53 @@
-/* Cake Scene - Matching GitHub Style */
+/* Cake Scene - Beautiful Realistic Design */
 .cake-scene {
     position: relative;
-    width: 100%mon;
-    height: 600px;
+    width: 100%;
+    min-height: 600px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #181c24;
-    border-radius: 20px;
+    background: linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+    border-radius: 24px;
+    overflow: hidden;
+}
+
+/* Background glow effect */
+.cake-scene::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(255, 100, 150, 0.15) 0%, transparent 70%);
+    pointer-events: none;
 }
 
 .close-cake-btn {
     position: absolute;
-    top: 15px;
-    right: 15px;
-    width: 40px;
-    height: 40px;
+    top: 20px;
+    right: 20px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
     color: white;
     font-size: 24px;
     cursor: pointer;
     z-index: 100;
-    transition: all 0.3s;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .close-cake-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: scale(1.1);
+    background: rgba(255, 255, 255, 0.25);
+    transform: scale(1.1) rotate(90deg);
+    border-color: rgba(255, 255, 255, 0.4);
 }
 
 .cake-display {
@@ -36,69 +55,145 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-    max-width: 500px;
+    max-width: 550px;
+    padding: 20px;
 }
 
+/* Main Cake Container */
 .cake-img-wrapper {
     position: relative;
     width: 100%;
-    height: 300px;
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 150"><ellipse cx="100" cy="130" rx="80" ry="15" fill="%23d4af37"/><rect x="40" y="60" width="120" height="70" rx="8" fill="%23f4d5d9"/><rect x="40" y="85" width="120" height="5" fill="rgba(255,255,255,0.3)"/><ellipse cx="100" cy="60" rx="60" ry="8" fill="%23fff"/><ellipse cx="50" cy="53" rx="4" ry="4" fill="%23d60036"/><ellipse cx="100" cy="50" rx="4" ry="4" fill="%23d60036"/><ellipse cx="150" cy="53" rx="4" ry="4" fill="%23d60036"/></svg>');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
+    max-width: 400px;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-/* Candle Canvas */
+/* Real Cake Image */
+.cake-image {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.5));
+    animation: floatCake 4s ease-in-out infinite;
+}
+
+@keyframes floatCake {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Candle Canvas - Positioned on top of cake */
 #cake-candle-canvas {
     position: absolute;
     left: 50%;
-    top: -70px;
+    top: 5%;
     transform: translateX(-50%);
     width: 100px;
     height: 140px;
     z-index: 10;
-    filter:
-        drop-shadow(0 0 15px rgba(255, 237, 133, 0.7)) drop-shadow(0 0 30px rgba(255, 213, 0, 0.5));
-    transition: all 0.3s ease;
+    filter: drop-shadow(0 0 20px rgba(255, 237, 133, 0.8)) drop-shadow(0 0 40px rgba(255, 213, 0, 0.6));
+    transition: filter 0.5s ease;
 }
 
 #cake-candle-canvas.candle-off {
     filter: none;
-    opacity: 0.8;
+}
+
+/* Glow effect around candle when lit */
+.candle-glow {
+    position: absolute;
+    left: 50%;
+    top: 10%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 120px;
+    background: radial-gradient(circle, rgba(255, 200, 100, 0.3) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: glowPulse 2s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes glowPulse {
+
+    0%,
+    100% {
+        opacity: 0.8;
+        transform: translateX(-50%) scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: translateX(-50%) scale(1.2);
+    }
+}
+
+.candle-off~.candle-glow,
+.cake-img-wrapper:has(.candle-off) .candle-glow {
+    display: none;
 }
 
 /* Text Below Cake */
 .text-below-cake {
-    margin-top: 30px;
+    margin-top: 40px;
     text-align: center;
     width: 100%;
 }
 
 .blow-btn {
-    background: linear-gradient(135deg, #ff4081 0%, #ff9100 100%);
+    background: linear-gradient(135deg, #ff4081 0%, #ff6b6b 50%, #ff9100 100%);
+    background-size: 200% 200%;
     color: white;
     border: none;
-    border-radius: 30px;
-    padding: 14px 40px;
-    font-size: 1.2rem;
+    border-radius: 50px;
+    padding: 18px 50px;
+    font-size: 1.25rem;
     font-weight: 600;
     cursor: pointer;
-    box-shadow: 0 5px 15px rgba(255, 64, 129, 0.4);
-    transition: all 0.3s ease;
-    margin-bottom: 15px;
+    box-shadow:
+        0 8px 25px rgba(255, 64, 129, 0.4),
+        0 0 0 0 rgba(255, 64, 129, 0.4);
+    transition: all 0.4s ease;
+    margin-bottom: 20px;
+    animation: gradientShift 3s ease infinite;
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: 0.5px;
+}
+
+@keyframes gradientShift {
+
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
 }
 
 .blow-btn:hover:not(:disabled) {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(255, 64, 129, 0.6);
+    transform: translateY(-4px) scale(1.02);
+    box-shadow:
+        0 12px 35px rgba(255, 64, 129, 0.5),
+        0 0 20px rgba(255, 64, 129, 0.3);
+}
+
+.blow-btn:active:not(:disabled) {
+    transform: translateY(-2px) scale(0.98);
 }
 
 .blow-btn:disabled {
-    opacity: 0.8;
     cursor: default;
-    animation: pulse 2s ease-in-out infinite;
+    animation: pulse 1.5s ease-in-out infinite, gradientShift 3s ease infinite;
 }
 
 @keyframes pulse {
@@ -106,74 +201,189 @@
     0%,
     100% {
         transform: scale(1);
+        box-shadow: 0 8px 25px rgba(255, 64, 129, 0.4), 0 0 0 0 rgba(255, 64, 129, 0.4);
     }
 
     50% {
-        transform: scale(1.05);
+        transform: scale(1.03);
+        box-shadow: 0 8px 25px rgba(255, 64, 129, 0.4), 0 0 0 10px rgba(255, 64, 129, 0);
     }
 }
 
+/* Microphone indicator */
+.mic-indicator {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background: #ff0000;
+    border-radius: 50%;
+    margin-right: 8px;
+    animation: micPulse 1s ease-in-out infinite;
+}
+
+@keyframes micPulse {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.5;
+        transform: scale(0.8);
+    }
+}
+
+/* Birthday Message */
 .birthday-message {
-    font-size: 2rem;
-    color: #ff4081;
-    font-weight: 700;
-    animation: popIn 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3), 0 0 12px rgba(255, 64, 129, 0.4);
+    font-size: 2.5rem;
+    font-family: 'Dancing Script', cursive;
+    background: linear-gradient(135deg, #ff4081, #ff6b6b, #ffd700);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: popIn 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
 
 @keyframes popIn {
     0% {
-        transform: scale(0.5);
+        transform: scale(0.3) rotate(-10deg);
         opacity: 0;
     }
 
+    50% {
+        transform: scale(1.15) rotate(3deg);
+    }
+
     70% {
-        transform: scale(1.1);
+        transform: scale(0.95) rotate(-2deg);
     }
 
     100% {
-        transform: scale(1);
+        transform: scale(1) rotate(0deg);
         opacity: 1;
     }
 }
 
+/* Hint Text */
 .hint-text {
-    color: #b0bec5;
+    color: rgba(255, 255, 255, 0.7);
     font-size: 1.1rem;
-    margin-top: 10px;
-    line-height: 1.6;
+    margin-top: 15px;
+    line-height: 1.8;
+    font-family: 'Poppins', sans-serif;
 }
 
 .hint-text strong {
-    color: #ffe082;
+    color: #ffd700;
+    font-weight: 600;
+}
+
+/* Decorative particles */
+.cake-scene::after {
+    content: '✨';
+    position: absolute;
+    top: 20%;
+    left: 15%;
+    font-size: 24px;
+    animation: sparkle 3s ease-in-out infinite;
+    opacity: 0.6;
+}
+
+@keyframes sparkle {
+
+    0%,
+    100% {
+        opacity: 0.3;
+        transform: scale(0.8) rotate(0deg);
+    }
+
+    50% {
+        opacity: 0.8;
+        transform: scale(1.2) rotate(180deg);
+    }
+}
+
+/* Additional sparkles */
+.sparkle-1,
+.sparkle-2,
+.sparkle-3 {
+    position: absolute;
+    font-size: 20px;
+    pointer-events: none;
+}
+
+.sparkle-1 {
+    top: 15%;
+    right: 20%;
+    animation: sparkle 2.5s ease-in-out infinite 0.3s;
+}
+
+.sparkle-2 {
+    bottom: 25%;
+    left: 10%;
+    animation: sparkle 3.2s ease-in-out infinite 0.7s;
+}
+
+.sparkle-3 {
+    bottom: 30%;
+    right: 15%;
+    animation: sparkle 2.8s ease-in-out infinite 1s;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
     .cake-scene {
-        height: 500px;
+        min-height: 500px;
+        border-radius: 16px;
     }
 
     .cake-img-wrapper {
-        height: 250px;
+        max-width: 300px;
     }
 
     #cake-candle-canvas {
-        top: -50px;
         width: 80px;
-        height: 120px;
+        height: 110px;
+        top: 8%;
     }
 
     .blow-btn {
-        padding: 12px 30px;
-        font-size: 1rem;
+        padding: 14px 35px;
+        font-size: 1.1rem;
+    }
+
+    .birthday-message {
+        font-size: 1.8rem;
+    }
+
+    .hint-text {
+        font-size: 0.95rem;
+        padding: 0 15px;
+    }
+
+    .close-cake-btn {
+        top: 12px;
+        right: 12px;
+        width: 38px;
+        height: 38px;
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .cake-img-wrapper {
+        max-width: 250px;
     }
 
     .birthday-message {
         font-size: 1.5rem;
     }
 
-    .hint-text {
-        font-size: 0.95rem;
+    .blow-btn {
+        padding: 12px 28px;
+        font-size: 1rem;
     }
 }

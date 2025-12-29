@@ -30,7 +30,7 @@ const Cake = ({ onClose }) => {
 
         const drawSmokes = () => {
             const { smokes } = flameState.current;
-            smokes.forEach((s, i) => {
+            smokes.forEach((s) => {
                 ctx.save();
                 ctx.globalAlpha = s.alpha;
                 ctx.beginPath();
@@ -51,9 +51,13 @@ const Cake = ({ onClose }) => {
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Candle body
+            // Candle body - pink with stripes
             ctx.save();
-            ctx.fillStyle = "#f8bbd0";
+            const gradient = ctx.createLinearGradient(18, 38, 26, 38);
+            gradient.addColorStop(0, "#f8bbd0");
+            gradient.addColorStop(0.5, "#fff");
+            gradient.addColorStop(1, "#f8bbd0");
+            ctx.fillStyle = gradient;
             ctx.fillRect(18, 38, 8, 40);
 
             // Candle top ellipse
@@ -73,41 +77,50 @@ const Cake = ({ onClose }) => {
 
             // Flame
             if (flameOn) {
-                let flick = isBlowDetected ? Math.sin(Date.now() / 100) * 2 : 0;
+                let flick = isBlowDetected ? Math.sin(Date.now() / 100) * 3 : Math.sin(Date.now() / 200) * 0.5;
 
                 let flameHeight = Math.max(1, 13 * size + flick);
                 let flameWidth = Math.max(0.5, 4.5 * size);
 
                 // Outer glow
                 ctx.save();
-                ctx.globalAlpha = 0.4 * size;
+                ctx.globalAlpha = 0.5 * size;
                 ctx.beginPath();
-                ctx.ellipse(22, 22, flameWidth + 3, flameHeight + 3, 0, 0, 2 * Math.PI);
+                ctx.ellipse(22, 20, flameWidth + 5, flameHeight + 5, 0, 0, 2 * Math.PI);
                 ctx.fillStyle = "#fffde7";
-                ctx.shadowColor = "#fffde7";
-                ctx.shadowBlur = 10;
+                ctx.shadowColor = "#ffeb3b";
+                ctx.shadowBlur = 15;
                 ctx.fill();
                 ctx.restore();
 
-                // Yellow core
+                // Yellow outer flame
                 ctx.save();
-                ctx.globalAlpha = 0.8 * size;
+                ctx.globalAlpha = 0.9 * size;
                 ctx.beginPath();
-                ctx.ellipse(22, 22, flameWidth, flameHeight, 0, 0, 2 * Math.PI);
+                ctx.ellipse(22, 20, flameWidth, flameHeight, 0, 0, 2 * Math.PI);
                 ctx.fillStyle = "#ffe082";
                 ctx.shadowColor = "#ffd600";
-                ctx.shadowBlur = 5;
+                ctx.shadowBlur = 8;
                 ctx.fill();
                 ctx.restore();
 
-                // Orange center
+                // Orange core
                 ctx.save();
-                ctx.globalAlpha = 0.6 * size;
+                ctx.globalAlpha = 0.7 * size;
                 ctx.beginPath();
-                ctx.ellipse(22, 25, Math.max(0.5, flameWidth * 0.5), Math.max(0.5, flameHeight * 0.5), 0, 0, 2 * Math.PI);
+                ctx.ellipse(22, 23, flameWidth * 0.6, flameHeight * 0.6, 0, 0, 2 * Math.PI);
                 ctx.fillStyle = "#ff9800";
-                ctx.shadowColor = "#ff9800";
-                ctx.shadowBlur = 2;
+                ctx.shadowColor = "#ff5722";
+                ctx.shadowBlur = 4;
+                ctx.fill();
+                ctx.restore();
+
+                // Blue inner core (hottest point)
+                ctx.save();
+                ctx.globalAlpha = 0.4 * size;
+                ctx.beginPath();
+                ctx.ellipse(22, 26, flameWidth * 0.3, flameHeight * 0.3, 0, 0, 2 * Math.PI);
+                ctx.fillStyle = "#42a5f5";
                 ctx.fill();
                 ctx.restore();
             }
@@ -123,7 +136,7 @@ const Cake = ({ onClose }) => {
         return () => cancelAnimationFrame(animationId);
     }, []);
 
-    // Speech Recognition setup (matching GitHub repo)
+    // Speech Recognition setup
     useEffect(() => {
         if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
             console.warn('Speech Recognition not supported');
@@ -186,7 +199,6 @@ const Cake = ({ onClose }) => {
             setIsListening(false);
         };
 
-        // Update flame size based on blow intensity
         const updateFlame = setInterval(() => {
             if (flameState.current.isBlowDetected && flameState.current.flameOn) {
                 flameState.current.size = Math.max(0.2, flameState.current.size - 0.03 * flameState.current.blowIntensity);
@@ -231,23 +243,23 @@ const Cake = ({ onClose }) => {
         }
 
         // Confetti celebration
-        const duration = 3000;
+        const duration = 4000;
         const end = Date.now() + duration;
-        const colors = ['#ff9a9e', '#fbc2eb'];
+        const colors = ['#ff9a9e', '#fbc2eb', '#ffd700', '#ffffff'];
 
         (function frame() {
             confetti({
-                particleCount: 5,
+                particleCount: 4,
                 angle: 60,
-                spread: 55,
-                origin: { x: 0 },
+                spread: 70,
+                origin: { x: 0, y: 0.6 },
                 colors: colors
             });
             confetti({
-                particleCount: 5,
+                particleCount: 4,
                 angle: 120,
-                spread: 55,
-                origin: { x: 1 },
+                spread: 70,
+                origin: { x: 1, y: 0.6 },
                 colors: colors
             });
 
@@ -261,13 +273,29 @@ const Cake = ({ onClose }) => {
         <div className="cake-scene" onClick={(e) => e.stopPropagation()}>
             <button className="close-cake-btn" onClick={onClose}>×</button>
 
+            {/* Decorative sparkles */}
+            <span className="sparkle-1">✨</span>
+            <span className="sparkle-2">💫</span>
+            <span className="sparkle-3">⭐</span>
+
             <div className="cake-display">
                 <div className="cake-img-wrapper">
+                    {/* Real cake image */}
+                    <img
+                        src="/cake.png"
+                        alt="Birthday Cake"
+                        className="cake-image"
+                    />
+
+                    {/* Candle canvas overlay */}
                     <canvas
                         id="cake-candle-canvas"
                         ref={canvasRef}
                         className={isBlown ? 'candle-off' : ''}
                     />
+
+                    {/* Glow effect */}
+                    {!isBlown && <div className="candle-glow" />}
                 </div>
 
                 <div className="text-below-cake">
@@ -277,7 +305,14 @@ const Cake = ({ onClose }) => {
                             onClick={startListening}
                             disabled={isListening}
                         >
-                            {isListening ? '🎤 Listening... Blow now!' : '🎂 Blow out the candle!'}
+                            {isListening ? (
+                                <>
+                                    <span className="mic-indicator"></span>
+                                    Listening... Blow now!
+                                </>
+                            ) : (
+                                '🎂 Blow out the candle!'
+                            )}
                         </button>
                     ) : (
                         <div className="birthday-message">
