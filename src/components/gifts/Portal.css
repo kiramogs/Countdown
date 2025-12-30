@@ -74,8 +74,13 @@
     text-align: center;
     color: #0ff;
     font-family: 'Courier New', monospace;
-    margin-top: 120px;
+    margin-top: 80px;
     text-shadow: 0 0 5px #0ff;
+    position: absolute;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
 }
 
 /* Hologram */
@@ -173,5 +178,116 @@
 
     50% {
         transform: translateY(-20px);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .portal-overlay {
+        height: 450px;
+    }
+
+    .portal-box {
+        width: 80px;
+        height: 80px;
+    }
+
+    .cube .face {
+        width: 80px;
+        height: 80px;
+        font-size: 30px;
+    }
+
+    .front {
+        transform: rotateY(0deg) translateZ(40px);
+    }
+
+    .back {
+        transform: rotateY(180deg) translateZ(40px);
+    }
+
+    .right {
+        transform: rotateY(90deg) translateZ(40px);
+    }
+
+    .left {
+        transform: rotateY(-90deg) translateZ(40px);
+    }
+
+    .top {
+        transform: rotateX(90deg) translateZ(40px);
+    }
+
+    .bottom {
+        transform: rotateX(-90deg) translateZ(40px);
+    }
+
+    .portal-hint {
+        bottom: 60px;
+        font-size: 0.85rem;
+    }
+
+    .close-portal {
+        bottom: 1rem;
+    }
+
+    .terminal-interface {
+        width: 240px;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .portal-overlay {
+        height: 400px;
+    }
+
+    .portal-box {
+        width: 70px;
+        height: 70px;
+    }
+
+    .cube .face {
+        width: 70px;
+        height: 70px;
+        font-size: 24px;
+    }
+
+    .front {
+        transform: rotateY(0deg) translateZ(35px);
+    }
+
+    .back {
+        transform: rotateY(180deg) translateZ(35px);
+    }
+
+    .right {
+        transform: rotateY(90deg) translateZ(35px);
+    }
+
+    .left {
+        transform: rotateY(-90deg) translateZ(35px);
+    }
+
+    .top {
+        transform: rotateX(90deg) translateZ(35px);
+    }
+
+    .bottom {
+        transform: rotateX(-90deg) translateZ(35px);
+    }
+
+    .portal-hint {
+        bottom: 50px;
+        font-size: 0.75rem;
+    }
+
+    .terminal-interface {
+        width: 200px;
+        font-size: 0.7rem;
+    }
+
+    .hologram-beam {
+        width: 200px;
     }
 }
