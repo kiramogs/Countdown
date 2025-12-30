@@ -70,17 +70,25 @@
     transform: rotateX(-90deg) translateZ(50px);
 }
 
+/* Container for cube + hint - vertically stacked */
+.portal-initial {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    cursor: pointer;
+}
+
 .portal-hint {
     text-align: center;
     color: #0ff;
     font-family: 'Courier New', monospace;
-    margin-top: 80px;
     text-shadow: 0 0 5px #0ff;
-    position: absolute;
-    bottom: 80px;
-    left: 50%;
-    transform: translateX(-50%);
     white-space: nowrap;
+    margin: 0;
+    padding: 10px 20px;
+    font-size: 0.95rem;
 }
 
 /* Hologram */
@@ -223,7 +231,6 @@
     }
 
     .portal-hint {
-        bottom: 60px;
         font-size: 0.85rem;
     }
 
@@ -278,7 +285,6 @@
     }
 
     .portal-hint {
-        bottom: 50px;
         font-size: 0.75rem;
     }
 

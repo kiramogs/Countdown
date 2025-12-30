@@ -26,24 +26,26 @@ const Portal = ({ onClose }) => {
         <div className="portal-overlay" onClick={(e) => e.stopPropagation()}>
             <AnimatePresence>
                 {stage === 'closed' && (
-                    <motion.div
-                        className="portal-box"
-                        onClick={startSequence}
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        exit={{ scale: 0, opacity: 0 }}
-                        whileHover={{ scale: 1.05 }}
-                    >
-                        <div className="cube">
-                            <div className="face front">?</div>
-                            <div className="face back"></div>
-                            <div className="face right"></div>
-                            <div className="face left"></div>
-                            <div className="face top"></div>
-                            <div className="face bottom"></div>
-                        </div>
+                    <div className="portal-initial">
+                        <motion.div
+                            className="portal-box"
+                            onClick={startSequence}
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            exit={{ scale: 0, opacity: 0 }}
+                            whileHover={{ scale: 1.05 }}
+                        >
+                            <div className="cube">
+                                <div className="face front">?</div>
+                                <div className="face back"></div>
+                                <div className="face right"></div>
+                                <div className="face left"></div>
+                                <div className="face top"></div>
+                                <div className="face bottom"></div>
+                            </div>
+                        </motion.div>
                         <p className="portal-hint">Tap to Initiate Protocol</p>
-                    </motion.div>
+                    </div>
                 )}
 
                 {stage !== 'closed' && (
