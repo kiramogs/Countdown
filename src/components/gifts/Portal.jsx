@@ -19,7 +19,7 @@ const Portal = ({ onClose }) => {
     const startSequence = () => {
         setStage('opening');
         setTimeout(() => setStage('typing'), 1500);
-        setTimeout(() => setStage('warping'), 5000);
+        setTimeout(() => setStage('warping'), 7000); // Increased delay to read terminal text
     };
 
     return (
