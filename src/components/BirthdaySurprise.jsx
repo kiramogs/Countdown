@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import Envelope from './gifts/Envelope';
 import Cake from './gifts/Cake';
@@ -82,24 +83,27 @@ May this year bring you all the joy and love you deserve.`;
                             </motion.div>
                         ))}
                     </AnimatePresence>
-
-                    {/* Active Gift Content */}
-                    <AnimatePresence mode="wait">
-                        {activeGift && (
-                            <motion.div
-                                key={activeGift}
-                                className="expanded-gift-container"
-                                initial={{ opacity: 0, scale: 0.9 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                exit={{ opacity: 0, scale: 0.9 }}
-                                transition={{ duration: 0.4 }}
-                            >
-                                {renderGiftContent(activeGift)}
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
                 </section>
             </div>
+
+            {/* Active Gift Content - Rendered via Portal to ensure it breaks out of any transforms */}
+            {createPortal(
+                <AnimatePresence mode="wait">
+                    {activeGift && (
+                        <motion.div
+                            key={activeGift}
+                            className="expanded-gift-container"
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.9 }}
+                            transition={{ duration: 0.4 }}
+                        >
+                            {renderGiftContent(activeGift)}
+                        </motion.div>
+                    )}
+                </AnimatePresence>,
+                document.body
+            )}
         </motion.div>
     );
 };

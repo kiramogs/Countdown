@@ -22,12 +22,21 @@
 }
 
 /* Expanded Gift Container */
+/* Expanded Gift Container - Full Screen Overlay */
 .expanded-gift-container {
-    width: 100%;
-    min-height: 70vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1000;
     display: flex;
     align-items: center;
     justify-content: center;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    overflow-y: auto;
+    padding: 20px;
 }
 
 @media (max-width: 768px) {

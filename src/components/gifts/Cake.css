@@ -2,7 +2,8 @@
 .cake-scene {
     position: relative;
     width: 100%;
-    min-height: 700px;
+    max-width: 900px;
+    min-height: 60vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -10,6 +11,8 @@
     border-radius: 24px;
     overflow: visible;
     padding: 40px 20px;
+    margin: auto;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
 }
 
 /* Background glow effect */

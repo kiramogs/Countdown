@@ -10,8 +10,8 @@ const Portal = ({ onClose }) => {
         if (stage === 'warping') {
             const timer = setTimeout(() => {
                 // REPLACE WITH ACTUAL URL IN PRODUCTION
-                window.location.href = "https://example.com";
-            }, 2500); // Wait for warp animation
+                window.location.href = "https://nandinithecatwoman.vercel.app/";
+            }, 5000); // 5 seconds to read the new text
             return () => clearTimeout(timer);
         }
     }, [stage]);
@@ -19,7 +19,8 @@ const Portal = ({ onClose }) => {
     const startSequence = () => {
         setStage('opening');
         setTimeout(() => setStage('typing'), 1500);
-        setTimeout(() => setStage('warping'), 7000); // Increased delay to read terminal text
+        // Extended time for more text to type out
+        setTimeout(() => setStage('warping'), 9000);
     };
 
     return (
@@ -70,20 +71,31 @@ const Portal = ({ onClose }) => {
                             <div className="terminal-interface">
                                 <Typewriter text="> ACCESSING SECURE SERVER..." delay={0} />
                                 <Typewriter text="> VERIFYING BIOMETRICS: MATCHED (❤️)" delay={1500} />
-                                <Typewriter text="> LOADING 'PROJECT ARMAN'..." delay={3000} />
+                                <Typewriter text="> LOADING 'PROJECT NANIN'..." delay={3000} />
                             </div>
                         )}
 
-                        {/* Warp Tunnel */}
+                        {/* Warp Tunnel & Final Text */}
                         {stage === 'warping' && (
-                            <motion.div
-                                className="warp-tunnel"
-                                initial={{ scale: 0, opacity: 0 }}
-                                animate={{ scale: 20, opacity: 1 }}
-                                transition={{ duration: 2, ease: "easeIn" }}
-                            >
-                                <div className="star-field"></div>
-                            </motion.div>
+                            <>
+                                <motion.div
+                                    className="warp-tunnel"
+                                    initial={{ scale: 0, opacity: 0 }}
+                                    animate={{ scale: 30, opacity: 1 }}
+                                    transition={{ duration: 2, ease: "easeIn" }}
+                                >
+                                    <div className="star-field"></div>
+                                </motion.div>
+
+                                <motion.div
+                                    className="warp-text"
+                                    initial={{ opacity: 0, scale: 0.8 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{ delay: 2, duration: 1 }}
+                                >
+                                    Entering Nānīn...
+                                </motion.div>
+                            </>
                         )}
                     </motion.div>
                 )}
