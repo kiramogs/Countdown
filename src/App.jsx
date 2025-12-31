@@ -6,7 +6,7 @@ import CustomCursor from './components/CustomCursor';
 import './App.css';
 
 function App() {
-  const targetDateStr = "December 28, 2025 00:00:00"; // PREVIEW MODE
+  const targetDateStr = "January 19, 2026 00:00:00"; // HER BIRTHDAY! 🎂
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
   const [isFinished, setIsFinished] = useState(false);
 
