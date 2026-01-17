@@ -221,7 +221,7 @@ export default function HeroSection() {
                     }}
                     transition={{ duration: 0.8, ease: "easeOut" }}
                 >
-                    <h1 className="main-title" style={{ fontSize: '5rem', margin: 0 }}>Happy Birthday</h1>
+                    <h1 className="main-title" style={{ fontSize: '5rem', margin: 0 }}>Happy Birthday, My Love</h1>
                     <p className="subtitle-text" style={{ fontSize: '1.5rem', marginTop: '1rem' }}>
                         Scroll to explore your surprise...
                     </p>
