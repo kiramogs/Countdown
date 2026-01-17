@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState, useLayoutEffect, useCallback } from 'react';
 import { motion, useSpring, useMotionValue } from 'framer-motion';
 
-const FRAME_COUNT = 80;
+const FRAME_COUNT = 53;
 const IMAGE_PATH_PREFIX = '/frames/Untitled video - Made with Clipchamp_';
 const IMAGE_EXTENSION = '.jpg';
 const DIGITS = 3;
