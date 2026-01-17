@@ -6,7 +6,7 @@ import CustomCursor from './components/CustomCursor';
 import './App.css';
 
 function App() {
-  const targetDateStr = "January 19, 2026 00:00:00"; // HER BIRTHDAY! 🎂
+  const targetDateStr = "January 19, 2026 00:00:00"; // Birthday date
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
   const [isFinished, setIsFinished] = useState(false);
 
@@ -28,7 +28,6 @@ function App() {
   }
 
   useEffect(() => {
-    // Check immediately
     const checkTimer = () => {
       const difference = new Date(targetDateStr).getTime() - new Date().getTime();
       if (difference <= 0) {
@@ -48,53 +47,55 @@ function App() {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [isFinished]); // Add isFinished dependency to ensure effect runs correctly
+  }, [isFinished]);
 
   const formatNumber = (num) => (num < 10 ? `0${num}` : num);
 
   return (
     <>
       <CustomCursor />
-      <div className="app-background"></div>
-      {/* Background is now CSS-controlled for better performance, but <Background /> component (hearts) is still useful overlay */}
+      {/* Background hearts overlay - global */}
       <Background />
 
       <AnimatePresence mode="wait">
         {!isFinished ? (
           <motion.div
-            key="countdown"
-            className="glass-card-container"
+            key="countdown-wrapper"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0, filter: 'blur(10px)', scale: 1.1 }}
-            transition={{ duration: 1.2, ease: "easeInOut" }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1 }}
           >
-            <motion.div
-              className="glass-card"
-              initial={{ y: 50, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.2, duration: 0.8 }}
-            >
-              <h2 className="subtitle">Counting down to</h2>
-              <h1 className="title">The Special Day</h1>
+            {/* Simple countdown without the broken HeroSequence */}
+            <div className="glass-card-container">
+              <motion.div
+                key="countdown"
+                className="glass-card"
+                initial={{ y: 50, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.2, duration: 0.8 }}
+              >
+                <h2 className="subtitle">Counting down to</h2>
+                <h1 className="title">The Special Day</h1>
 
-              <div className="timer-container">
-                {Object.keys(timeLeft).map((interval, i) => (
-                  <motion.div
-                    key={interval}
-                    className="timer-box"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4 + (i * 0.1) }}
-                  >
-                    <span className="timer-number">
-                      {formatNumber(timeLeft[interval])}
-                    </span>
-                    <span className="timer-label">{interval}</span>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
+                <div className="timer-container">
+                  {Object.keys(timeLeft).map((interval, i) => (
+                    <motion.div
+                      key={interval}
+                      className="timer-box"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.4 + (i * 0.1) }}
+                    >
+                      <span className="timer-number">
+                        {formatNumber(timeLeft[interval])}
+                      </span>
+                      <span className="timer-label">{interval}</span>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
+            </div>
           </motion.div>
         ) : (
           <motion.div

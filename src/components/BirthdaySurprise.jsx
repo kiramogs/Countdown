@@ -3,10 +3,11 @@ import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import Envelope from './gifts/Envelope';
 import Cake from './gifts/Cake';
-import Portal from './gifts/Portal';
-import GiftBox from './GiftBox';
+// Portal removed
+import HeroSection from './HeroSection';
+import GiftsSection from './GiftsSection';
 import './BirthdaySurprise.css';
-import './BirthdaySurpriseTransform.css';
+// import './BirthdaySurpriseTransform.css'; // Used inside GiftsSection
 
 const BirthdaySurprise = () => {
     const [activeGift, setActiveGift] = useState(null);
@@ -27,8 +28,7 @@ May this year bring you all the joy and love you deserve.`;
 
     const gifts = [
         { id: 'envelope', shape: 'envelope', colors: ['#ff9a9e', '#fecfef'], label: 'Love Letter' },
-        { id: 'cake', shape: 'cake', colors: ['#a18cd1', '#fbc2eb'], label: 'Birthday Cake' },
-        { id: 'portal', shape: 'gift', colors: ['#667eea', '#764ba2'], label: 'Special Website' }
+        { id: 'cake', shape: 'cake', colors: ['#a18cd1', '#fbc2eb'], label: 'Birthday Cake' }
     ];
 
     const renderGiftContent = (giftId) => {
@@ -37,56 +37,28 @@ May this year bring you all the joy and love you deserve.`;
                 return <Envelope message={letterMessage} onClose={handleClose} />;
             case 'cake':
                 return <Cake onClose={handleClose} />;
-            case 'portal':
-                return <Portal onClose={handleClose} />;
+            // Portal case removed
             default:
                 return null;
         }
     };
 
     return (
-        <motion.div
-            className="birthday-surprise"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1 }}
-        >
-            <div className="content-wrapper">
-                <motion.section
-                    className="hero-section"
-                    animate={{ opacity: activeGift ? 0.3 : 1, scale: activeGift ? 0.95 : 1 }}
-                    transition={{ duration: 0.3 }}
-                >
-                    <h1 className="main-title">Happy Birthday</h1>
-                    {!activeGift && <p className="subtitle-text">Tap a gift to reveal your surprise...</p>}
-                </motion.section>
+        <div style={{ width: '100%', overflowX: 'hidden', background: 'transparent' }}>
 
-                <section className="gifts-section-transform">
-                    {/* Gift Boxes */}
-                    <AnimatePresence>
-                        {!activeGift && gifts.map((gift, index) => (
-                            <motion.div
-                                key={gift.id}
-                                className="gift-wrapper"
-                                initial={{ opacity: 0, y: 50 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, scale: 0.8 }}
-                                transition={{ duration: 0.4, delay: index * 0.1 }}
-                                onClick={() => setActiveGift(gift.id)}
-                            >
-                                <GiftBox
-                                    index={index}
-                                    shape={gift.shape}
-                                    gradientColors={gift.colors}
-                                    label={gift.label}
-                                />
-                            </motion.div>
-                        ))}
-                    </AnimatePresence>
-                </section>
-            </div>
+            {/* 1. Hero Section with Scroll Sequence */}
+            {/* This takes up 300vh space, with intro text pinned */}
+            <HeroSection />
 
-            {/* Active Gift Content - Rendered via Portal to ensure it breaks out of any transforms */}
+            {/* 2. Gifts Section */}
+            {/* Appears after the user scrolls past the hero sequence */}
+            <GiftsSection
+                gifts={gifts}
+                activeGift={activeGift}
+                setActiveGift={setActiveGift}
+            />
+
+            {/* 3. Modal Content */}
             {createPortal(
                 <AnimatePresence mode="wait">
                     {activeGift && (
@@ -97,6 +69,7 @@ May this year bring you all the joy and love you deserve.`;
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0, scale: 0.9 }}
                             transition={{ duration: 0.4 }}
+                            style={{ position: 'fixed', inset: 0, zIndex: 10000, background: 'rgba(0,0,0,0.9)' }}
                         >
                             {renderGiftContent(activeGift)}
                         </motion.div>
@@ -104,7 +77,7 @@ May this year bring you all the joy and love you deserve.`;
                 </AnimatePresence>,
                 document.body
             )}
-        </motion.div>
+        </div>
     );
 };
 

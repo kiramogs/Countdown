@@ -6,7 +6,7 @@ const Background = () => {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext('2d', { alpha: false });
+    const ctx = canvas.getContext('2d', { alpha: true }); // Changed to true for transparency
 
     let animationFrameId;
     let width, height;
@@ -57,15 +57,12 @@ const Background = () => {
       if (deltaTime < frameInterval) return;
       lastTime = currentTime - (deltaTime % frameInterval);
 
-      // Draw gradient background
-      const gradient = ctx.createLinearGradient(0, 0, width, height);
-      gradient.addColorStop(0, '#ff9a9e');
-      gradient.addColorStop(0.25, '#fad0c4');
-      gradient.addColorStop(0.5, '#fbc2eb');
-      gradient.addColorStop(0.75, '#a18cd1');
-      gradient.addColorStop(1, '#ff9a9e');
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, width, height);
+      // Clear canvas for transparent background
+      ctx.clearRect(0, 0, width, height);
+
+      // Gradient removed to allow HeroSequence images to show through
+      // If we want a fallback background color, it should be on the body or check z-indexing
+
 
       particles.forEach(p => {
         p.y -= p.speedY;
@@ -105,7 +102,7 @@ const Background = () => {
         left: 0,
         width: '100%',
         height: '100%',
-        zIndex: -1,
+        zIndex: 50,
         pointerEvents: 'none'
       }}
     />
