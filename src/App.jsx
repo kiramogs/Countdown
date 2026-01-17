@@ -49,15 +49,6 @@ function App() {
     return () => clearInterval(timer);
   }, [isFinished]);
 
-  // Dynamic background: pink gradient for countdown, dark texture for birthday
-  useEffect(() => {
-    if (isFinished) {
-      document.body.style.background = '#0a0a12 url("/bg-texture.png") repeat';
-    } else {
-      document.body.style.background = 'linear-gradient(135deg, #fad0c4 0%, #ffd1ff 100%)';
-    }
-  }, [isFinished]);
-
   const formatNumber = (num) => (num < 10 ? `0${num}` : num);
 
   return (
