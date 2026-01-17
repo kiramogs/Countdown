@@ -15,15 +15,10 @@ body {
   min-height: 100vh;
   font-family: 'Poppins', sans-serif;
   color: var(--text-light);
-  /* Changed to white for contrast on dark bg */
   overflow-x: hidden;
-  /* cursor: none; */
-  background-color: #0a0a12;
-  /* Fallback dark color */
-  background-image: url('/bg-texture.png');
-  background-repeat: repeat;
-  background-size: auto;
-  /* Tile the texture */
+  /* Background is dynamically set by App.jsx based on countdown state */
+  background: linear-gradient(135deg, #fad0c4 0%, #ffd1ff 100%);
+  /* Default/fallback */
 }
 
 /* Typography Overrides */
