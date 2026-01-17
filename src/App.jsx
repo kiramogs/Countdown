@@ -65,6 +65,12 @@ function App() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 1 }}
+            style={{
+              position: 'fixed',
+              inset: 0,
+              background: 'linear-gradient(135deg, #fad0c4 0%, #ffd1ff 100%)',
+              zIndex: 5
+            }}
           >
             {/* Simple countdown without the broken HeroSequence */}
             <div className="glass-card-container">
