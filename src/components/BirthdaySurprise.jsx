@@ -12,17 +12,15 @@ import './BirthdaySurprise.css';
 const BirthdaySurprise = () => {
     const [activeGift, setActiveGift] = useState(null);
 
-    const letterMessage = `My Dearest,
+    const letterMessage = `Dear Future Mrs. Madhwani,
 
-On this special day, I want you to know how incredibly grateful I am to have you in my life.
+I still can't believe that this is happening, like yesssssssssssssssssssss, I am finally with the LOVE OF MY LIFE, and celebrating HER 21st BIRTHDAY with me being her lover. Although this seems like a fantasy, I am so happy this is happening in real life.
 
-Every moment with you is a treasure, every smile you give me lights up my world.
+From the moment I fell in love with you, started to fall for you harder and harder with each word that came out of your mouth, each smile you gave, and your EYES, ohhhh lorrrrddddddd!!!
 
-You are my sunshine, my happiness, and my everything.
+I will always love you honey, and nothing can change this 💗💗💗.
 
-Happy Birthday, my love! 🎂
-
-May this year bring you all the joy and love you deserve.`;
+HAPPY BIRTHDAY ONCE AGAIN MY LOVE 😘😘😘😘`;
 
     const handleClose = () => setActiveGift(null);
 
